@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Create(){
 
@@ -17,8 +19,9 @@ export default function Create(){
          axios.post("/create/user", user)
         .then((res) => {
             console.log(res);
-            navigate("/");
+            navigate("/", { state: { message: "User created successfully!" } });
         }).catch((error) => {
+            toast.error("Failed to create user!")
             return error;
         }); 
     }

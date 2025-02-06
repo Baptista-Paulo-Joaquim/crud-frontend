@@ -1,13 +1,23 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import "react-toastify/dist/ReactToastify.css"
 
 export default function Home() {
 
     const [user, setUser] = useState([]);
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (location.state?.message) {
+            toast.success(location.state.message);
+            navigate(".", { replace: true, state: {} });
+        }
+    }, [location.state, navigate]);
 
     useEffect(() => {
         axios.get("/read")
@@ -20,16 +30,28 @@ export default function Home() {
     }, []);
 
     const handleDelete = (id) => {
-       axios.delete(`/delete/${id}`)
-        .then(() => {
-            setUser(prevUsers => prevUsers.filter(user => user.id !== id));
-            toast.error("User deleted successfully!");
-        })
-        .catch((error) => {
-            console.error("Error deleting user:", error);
-            toast.error("Failed to delete user.");
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(`/delete/${id}`)
+                    .then(() => {
+                        setUser(prevUsers => prevUsers.filter(user => user.id !== id));
+                        Swal.fire("Deleted!", "User has been deleted.", "success");
+                    })
+                    .catch((error) => {
+                        console.error("Error deleting user:", error);
+                        Swal.fire("Error!", "Failed to delete user.", "error");
+                    });
+            }
         });
-    }
+    };
 
     return (
         <div className="container">

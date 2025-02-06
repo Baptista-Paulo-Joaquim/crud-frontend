@@ -29,7 +29,7 @@ export default function Edit(){
         .then(res => {
             console.log(res)
             setUser(user);
-            navigate("/");
+            navigate("/", { state: { message: "User updated successfully!" } });
         })
         .catch(error => {
             console.log(user)
