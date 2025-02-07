@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
 import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"
@@ -54,35 +53,40 @@ export default function Home() {
     };
 
     return (
-        <div className="container">
-            <ToastContainer />
-            <Link to={`/create`} className="btn btn-success p mb-2">Create user</Link>
-            <table className="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        user.map((user, index) => (
-                            <tr key={index}>
-                                <td>{user.id}</td>
-                                <td>{user.name}</td>
-                                <td>{user.email}</td>
-                                <td>
-                                    <Link to={`/user/${user.id}`} className="btn btn-outline-info btn-sm">View</Link>
-                                    <Link to={`/edit/${user.id}`} className="btn btn-outline-primary btn-sm m-1">Edit</Link>
-                                    <button onClick={() => handleDelete(user.id)} className="btn btn-outline-danger btn-sm">Delete</button>
-                                </td>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </table>
-        </div>
+<div class="w-3/5 p-17 mx-auto relative overflow-x-auto shadow-md sm:rounded-lg p-4 border border-gray-300 rounded-lg">
+    <ToastContainer />
+
+    <div class="mb-2 flex justify-end">
+        <Link to={`/create`} class="px-3 py-3 text-white bg-blue-700 rounded hover:bg-blue-500 text-xs">
+            Add New User
+        </Link>
+    </div>
+
+    <table class="w-full text-xs text-left text-gray-700 border border-gray-200 rounded-lg">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <tr>
+                <th class="px-4 py-2 border-b">ID</th>
+                <th class="px-4 py-2 border-b">NAME</th>
+                <th class="px-4 py-2 border-b">EMAIL</th>
+                <th class="px-4 py-2 border-b">ACTION</th>
+            </tr>
+        </thead>
+        <tbody>
+            {user.map((user, index) => (
+                <tr key={index} class="bg-white border-b hover:bg-gray-100">
+                    <td class="px-4 py-2">{user.id}</td>
+                    <td class="px-4 py-2">{user.name}</td>
+                    <td class="px-4 py-2">{user.email}</td>
+                    <td class="px-4 py-2 flex gap-1">
+                        <Link to={`/user/${user.id}`} class="px-2 py-1 text-white bg-blue-600 rounded hover:bg-blue-700 text-xs">View</Link>
+                        <Link to={`/edit/${user.id}`} class="px-2 py-1 text-white bg-green-600 rounded hover:bg-green-700 text-xs">Edit</Link>
+                        <button onClick={() => handleDelete(user.id)} class="px-2 py-1 text-white bg-red-600 rounded hover:bg-red-700 text-xs">Delete</button>
+                    </td>
+                </tr>
+            ))}
+        </tbody>
+    </table>
+</div>
+
     )
 }
