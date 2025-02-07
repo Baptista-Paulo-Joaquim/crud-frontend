@@ -53,7 +53,7 @@ export default function Home() {
     };
 
     return (
-<div class="w-3/5 p-17 mx-auto relative overflow-x-auto shadow-md sm:rounded-lg p-4 border border-gray-300 rounded-lg">
+<div class="w-3/5 p-10 m-20 mx-auto relative overflow-x-auto shadow-md sm:rounded-lg p-4 border border-gray-300 rounded-lg">
     <ToastContainer />
 
     <div class="mb-2 flex justify-end">
